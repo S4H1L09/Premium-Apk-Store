@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Overthinker | Rulex Convo Tool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.ibb.co/XrxMSdq9/3a75353acbc6f6c7e009a41447b94448.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .wrapper {
+      padding: 40px 10%;
+      flex: 1;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 18px;
+      padding: 35px 25px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      border: 1px solid #ffffff30;
+    }
+
+    h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 25px;
+      font-size: 22px;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    label {
+      font-size: 15px;
+      font-weight: bold;
+      color: #ddd;
+    }
+
+    input[type="file"],
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #222;
+      border: 1px solid #555;
+      border-radius: 10px;
+      font-size: 15px;
+      color: #fff;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    .button {
+      width: 65%;
+      align-self: center;
+      padding: 12px;
+      background: linear-gradient(135deg, #00bcd4, #009688);
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00bcd4aa;
+    }
+
+    .stop-btn {
+      background: linear-gradient(135deg, #ff1744, #d50000);
+    }
+
+    .task-id,
+    .message {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      text-align: center;
+      background: #111;
+      color: #0f0;
+      border-left: 4px solid #0f0;
+    }
+
+    .message.error {
+      color: #ff4c4c;
+      border-left: 4px solid #ff4c4c;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #444;
+      margin: 35px 0 20px 0;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #ccc;
+      padding: 15px 0;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    @media (max-width: 500px) {
+      .wrapper {
+        padding: 20px 5%;
+      }
+
+      .card {
+        padding: 25px 15px;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="card">
+      <h2>🚀 Start a New Loder</h2>
+      <form method="POST" enctype="multipart/form-data">
+        <div>
+          <label for="token_file">🗂 Token File (access_tokens.txt)</label>
+          <input type="file" name="token_file" id="token_file" required />
+        </div>
+
+        <div>
+          <label for="message_file">📝 Message File (messages.txt)</label>
+          <input type="file" name="message_file" id="message_file" required />
+        </div>
+
+        <div>
+          <label for="convo_id">💬 Conversation ID</label>
+          <input type="text" name="convo_id" id="convo_id" placeholder="e.g. 1234567890" required />
+        </div>
+
+        <div>
+          <label for="prefix">✍️ Haters Name</label>
+          <input type="text" name="prefix" id="prefix" placeholder="Enter the hater's name-" required />
+        </div>
+
+        <div>
+          <label for="speed">⏱ Speed (in seconds)</label>
+          <input type="number" name="speed" id="speed" placeholder="e.g. 2" required />
+        </div>
+
+        <button class="button" type="submit">🚀 Start Task</button>
+      </form>
+
+      {% if new_task_id %}
+        <div class="task-id">
+          ✅ Your Task ID: <strong>{{ new_task_id }}</strong>
+        </div>
+      {% endif %}
+
+      <hr />
+
+      <h2>🛑 Stop Running Loder</h2>
+      <form method="POST">
+        <label for="task_id">🔑 Enter Task ID</label>
+        <input type="text" name="task_id" id="task_id" placeholder="Paste your Task ID" required />
+        <button class="button stop-btn" type="submit">🛑 Stop Loder</button>
+      </form>
+
+      {% if message %}
+        <div class="message {% if '✅' in message %}success{% else %}error{% endif %}">
+          {{ message }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <footer>© Overthinker | All Rights Reserved</footer>
+
+</body>
+</html>
